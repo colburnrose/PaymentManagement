@@ -1,0 +1,7 @@
+C:\Users\colbu\source\repos\PaymentManagement\PaymentManagement.Entity\bin\Debug\netcoreapp3.1\PaymentManagement.Entity.deps.json
+C:\Users\colbu\source\repos\PaymentManagement\PaymentManagement.Entity\bin\Debug\netcoreapp3.1\PaymentManagement.Entity.dll
+C:\Users\colbu\source\repos\PaymentManagement\PaymentManagement.Entity\bin\Debug\netcoreapp3.1\PaymentManagement.Entity.pdb
+C:\Users\colbu\source\repos\PaymentManagement\PaymentManagement.Entity\obj\Debug\netcoreapp3.1\PaymentManagement.Entity.AssemblyInfoInputs.cache
+C:\Users\colbu\source\repos\PaymentManagement\PaymentManagement.Entity\obj\Debug\netcoreapp3.1\PaymentManagement.Entity.AssemblyInfo.cs
+C:\Users\colbu\source\repos\PaymentManagement\PaymentManagement.Entity\obj\Debug\netcoreapp3.1\PaymentManagement.Entity.dll
+C:\Users\colbu\source\repos\PaymentManagement\PaymentManagement.Entity\obj\Debug\netcoreapp3.1\PaymentManagement.Entity.pdb
