@@ -1,0 +1,52 @@
+﻿@model IEnumerable<EmployeeViewModel>
+@{
+    ViewData["Title"] = "Index";
+}
+
+<div class="row">
+    <div class="col-md-12 grid-margin">
+        <div class="card">
+            <div class="card-body">
+                <nav aria-label="breadcrumb">
+                    <ol class="breadcrumb">
+                        <li class="breadcrumb-item"><a asp-controller="Home" asp-action="Index">Home</a></li>
+                        <li class="breadcrumb-item active" aria-current="page">Employee List</li>
+                    </ol>
+                </nav><br /><br />
+                <div class="row">
+                    <div class="col-md-12 table-responsive-md">
+                        <a class="btn btn-xs btn-outline-success float-md-right" asp-action="Create">Create</a><br />
+                        <table class="table table-striped">
+                            <thead>
+                                <tr>
+                                    <th>Employee Number</th>
+                                    <th>Photo</th>
+                                    <th>Name</th>
+                                    <th>Gender</th>
+                                    <th>Role</th>
+                                    <th>City</th>
+                                    <th>Date Joined</th>
+                                    <th class="text-warning">Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach(var item in Model)
+                                {
+                                    <tr>
+                                        <td>@item.EmpNumber</td>
+                                        <td><img alt="image" src="@Url.Content(@item.ImageUrl)"/></td>
+                                        <td>@item.FullName</td>
+                                        <td>@item.Gender</td>
+                                        <td>@item.Role</td>
+                                        <td>@item.City</td>
+                                        <td>@item.DateJoined</td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
