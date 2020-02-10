@@ -1,7 +1,9 @@
 ﻿using PaymentManagement.Entity;
 using PaymentManagement.Services.Interface;
+using PaymentManagement.Web.Data;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -9,24 +11,45 @@ namespace PaymentManagement.Services.Service
 {
     public class EmployeeService : IEmployeeService
     {
-        public Task CreateEmployeeAsync(Employee employee)
+        private readonly ApplicationDbContext _db;
+        public EmployeeService(ApplicationDbContext db)
         {
-            throw new NotImplementedException();
-        }
-
-        public Task DeleteEmployeeById(int id)
-        {
-            throw new NotImplementedException();
-        }
-
-        public IEnumerable<Employee> GetAllEmployees()
-        {
-            throw new NotImplementedException();
+            _db = db;
         }
 
         public Employee GetById(int id)
         {
-            throw new NotImplementedException();
+            return _db.Employees.Where(x => x.Id == id).FirstOrDefault();
+        }
+        public async Task CreateEmployeeAsync(Employee employee)
+        {
+            _db.Employees.Add(employee);
+            await _db.SaveChangesAsync();
+        }
+
+        public async Task DeleteEmployeeById(int id)
+        {
+            var employee = GetById(id);
+            _db.Employees.Remove(employee);
+            await _db.SaveChangesAsync();
+        }
+
+        public async Task UpdateEmployeeAsync(Employee employee)
+        {
+            _db.Employees.Update(employee);
+            await _db.SaveChangesAsync();
+        }
+
+        public async Task UpdateEmployeeById(int id)
+        {
+            var employee = GetById(id);
+            _db.Employees.Update(employee);
+            await _db.SaveChangesAsync();
+        }
+
+        public IEnumerable<Employee> GetAllEmployees()
+        {
+            return _db.Employees.ToList();
         }
 
         public decimal StudentLoans(int id, decimal amount)
@@ -35,16 +58,6 @@ namespace PaymentManagement.Services.Service
         }
 
         public decimal UnionFees(int id)
-        {
-            throw new NotImplementedException();
-        }
-
-        public Task UpdateEmployeeAsync(Employee employee)
-        {
-            throw new NotImplementedException();
-        }
-
-        public Task UpdateEmployeeById(int id)
         {
             throw new NotImplementedException();
         }
