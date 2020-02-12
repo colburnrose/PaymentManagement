@@ -45,6 +45,7 @@ namespace PaymentManagement.Web.Controllers
         }
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create(CreateViewModel model)
         {
             if (ModelState.IsValid)
@@ -88,6 +89,60 @@ namespace PaymentManagement.Web.Controllers
                 return RedirectToAction(nameof(Index));
             }
 
+            return View();
+        }
+
+        [HttpGet]
+        public IActionResult Edit()
+        {
+            var model = new EditViewModel();
+            return View(model);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Edit(EditViewModel model)
+        {
+            if (ModelState.IsValid)
+            {
+                var employee = new Employee()
+                {
+                    Id = model.Id,
+                    EmpNumber = model.EmpNumber,
+                    FirstName = model.FirstName,
+                    MiddleName = model.MiddleName,
+                    LastName = model.LastName,
+                    Gender = model.Gender,
+                    ImageUrl = model.ImageUrl.ToString(),
+                    BirthDate = model.BirthDate,
+                    CreateDate = model.DateJoined,
+                    Role = model.Role,
+                    EmailAddress = model.Email,
+                    SSN = model.SSN,
+                    Address = model.Address,
+                    City = model.City,
+                    PostalCode = model.PostalCode,
+                    PaymentMethod = model.PaymentMethod,
+                    StudentLoan = model.StudentLoan,
+                    UnionMember = model.UnionMember,
+                    PaymentRecords = model.PaymentRecords
+                };
+
+                if(model.ImageUrl != null && model.ImageUrl.Length > 0)
+                {
+                    var imgPath = @"images/employee";
+                    var fileName = Path.GetFileName(model.ImageUrl.FileName);
+                    var ext = Path.GetFileNameWithoutExtension(model.ImageUrl.FileName);
+                    var webRoot = _webHostEnvironment.WebRootPath;
+
+                    fileName = DateTime.UtcNow.ToString("yyyy/mm/dd") + fileName + ext;
+                    var path = Path.Combine(webRoot, imgPath, fileName);
+                    await model.ImageUrl.CopyToAsync(new FileStream(path, FileMode.Create));
+                    employee.ImageUrl = "/" + imgPath + "/" + fileName;
+                }
+
+                await _employeeService.UpdateEmployeeAsync(employee);
+                return RedirectToAction(nameof(Index));
+            }
             return View();
         }
     }
