@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 using PaymentManagement.Entity;
 using PaymentManagement.Services.Interface;
@@ -13,9 +14,11 @@ namespace PaymentManagement.Web.Controllers
     public class EmployeeController : Controller
     {
         private readonly IEmployeeService _employeeService;
-        public EmployeeController(IEmployeeService employeeService)
+        private readonly IWebHostEnvironment _webHostEnvironment;
+        public EmployeeController(IEmployeeService employeeService, IWebHostEnvironment webHost)
         {
             _employeeService = employeeService;
+            _webHostEnvironment = webHost;
         }
         public IActionResult Index()
         {
@@ -69,12 +72,20 @@ namespace PaymentManagement.Web.Controllers
                     PaymentRecords = model.PaymentRecords
                 };
 
-                var path = @"images/employee";
-                var fileName = Path.GetFileName(model.ImageUrl.FileName);
-                var ext = Path.GetFileNameWithoutExtension(model.ImageUrl.FileName);
-                
-                
+                if(model.ImageUrl.Length > 0 && model.ImageUrl != null)
+                {
+                    var imgPath = @"images/employee";
+                    var fileName = Path.GetFileName(model.ImageUrl.FileName);
+                    var ext = Path.GetFileNameWithoutExtension(model.ImageUrl.FileName);
+                    var webRoot = _webHostEnvironment.WebRootPath;
+
+                    fileName = DateTime.UtcNow.ToString("yyyy/mm/dd") + fileName + ext;
+                    var path = Path.Combine(webRoot, imgPath, fileName);
+                    await model.ImageUrl.CopyToAsync(new FileStream(path, FileMode.Create));
+                    employee.ImageUrl = "/" + imgPath + "/" + fileName;
+                }              
                 await _employeeService.CreateEmployeeAsync(employee);
+                return RedirectToAction(nameof(Index));
             }
 
             return View();
