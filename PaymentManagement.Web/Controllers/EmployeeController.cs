@@ -93,9 +93,35 @@ namespace PaymentManagement.Web.Controllers
         }
 
         [HttpGet]
-        public IActionResult Edit()
+        public IActionResult Edit(int id)
         {
-            var model = new EditViewModel();
+            var employee = _employeeService.GetById(id);
+            if(employee == null)
+            {
+                return NotFound();
+            }
+
+            var model = new EditViewModel()
+            {
+                Id = employee.Id,
+                EmpNumber = employee.EmpNumber,
+                FirstName = employee.FirstName,
+                LastName = employee.LastName,
+                Gender = employee.Gender,
+                BirthDate = employee.BirthDate,
+                DateJoined = employee.CreateDate,
+                Role = employee.Role,
+                Email = employee.EmailAddress,
+                SSN = employee.SSN,
+                Address = employee.Address,
+                City = employee.City,
+                PostalCode = employee.PostalCode,
+                PaymentMethod = employee.PaymentMethod,
+                StudentLoan = employee.StudentLoan,
+                UnionMember = employee.UnionMember,
+                PaymentRecords = employee.PaymentRecords
+            };
+
             return View(model);
         }
 
