@@ -47,6 +47,7 @@ namespace PaymentManagement.Web.Models
         public string SSN { get; set; }
         public string Address { get; set; }
         public string City { get; set; }
+        public string PhoneNumber { get; set; }
         [Required, StringLength(10), Display(Name= "Postal Code")]
         public string PostalCode { get; set; }
         [Display(Name = "Payment Method")]
