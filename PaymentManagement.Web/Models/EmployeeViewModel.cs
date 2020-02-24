@@ -36,9 +36,9 @@ namespace PaymentManagement.Web.Models
         public string Gender { get; set; }
         [Display(Name = "Photo")]
         public IFormFile ImageUrl { get; set; }
-        [DataType(DataType.Date)]
+        [DataType(DataType.Date), Display(Name= "Birth Date")]
         public DateTime BirthDate { get; set; }
-        [DataType(DataType.Date)]
+        [DataType(DataType.Date), Display(Name = "Date Joined")]
         public DateTime DateJoined { get; set; }
         [Required(ErrorMessage ="Role is required."), StringLength(100)]
         public string Role { get; set; }
@@ -47,6 +47,7 @@ namespace PaymentManagement.Web.Models
         public string SSN { get; set; }
         public string Address { get; set; }
         public string City { get; set; }
+        [Display(Name = "Phone Number")]
         public string PhoneNumber { get; set; }
         [Required, StringLength(10), Display(Name= "Postal Code")]
         public string PostalCode { get; set; }
