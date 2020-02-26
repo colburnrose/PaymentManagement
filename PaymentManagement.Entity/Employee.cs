@@ -26,6 +26,7 @@ namespace PaymentManagement.Entity
         public string EmailAddress { get; set; }
         [Required, MaxLength(50)]
         public string SSN { get; set; }
+        public string Phone { get; set; }
         public PaymentMethod PaymentMethod { get; set; }
         public StudentLoan StudentLoan { get; set; }
         public UnionMember UnionMember { get; set; }

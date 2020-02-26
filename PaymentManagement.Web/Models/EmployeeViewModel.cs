@@ -24,15 +24,16 @@ namespace PaymentManagement.Web.Models
     public class CreateViewModel
     {
         public int Id { get; set; }
-        [Required(ErrorMessage = "Employee number is required."), RegularExpression(@"/^([A-Za-z]{2,}-\d+;)+$/")]
+        [Required(ErrorMessage = "Employee number is required."), RegularExpression(@"^[A-Z]{3,3}[0-9]{3}$")]
         public string EmpNumber { get; set; }
-        [Required(ErrorMessage = "First name is required."),StringLength(50, MinimumLength = 2), RegularExpression(@"^[A-Z][a-zA-Z""'\s-]*$"), Display(Name = "First Name")]
+        [Required(ErrorMessage = "First name is required."),StringLength(50, MinimumLength = 2), Display(Name = "First Name")]
+        [RegularExpression(@"^[A-Z][a-zA-Z""'\s-]*$")]
         public string FirstName { get; set; }
         [StringLength(50), Display(Name = "Middle Name")]
         public string MiddleName { get; set; }
         [Required(ErrorMessage ="Last name is required."),StringLength(50, MinimumLength = 2), RegularExpression(@"^[A-Z][a-zA-Z""'\s-]*$"), Display(Name="Last Name")]
         public string LastName { get; set; }
-        public string FullName => FirstName + (string.IsNullOrEmpty(MiddleName) ? " " : MiddleName) + LastName;
+        public string FullName => FirstName + (string.IsNullOrEmpty(MiddleName) ? " " : (" " + (char?)MiddleName[0] + ".").ToUpper()) + LastName;
         public string Gender { get; set; }
         [Display(Name = "Photo")]
         public IFormFile ImageUrl { get; set; }
