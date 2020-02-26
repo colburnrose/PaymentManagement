@@ -15,7 +15,7 @@
                 </nav><br /><br />
                 <div class="row">
                     <div class="col-md-12 table-responsive-md">
-                        <a class="btn btn-xs btn-outline-success float-md-right" asp-action="Create">Create Employee</a><br />
+                        <a class="btn btn-xs btn-outline-success float-md-right" asp-action="Create">New Employee</a><br />
                         <table class="table table-striped">
                             <thead>
                                 <tr>
@@ -40,6 +40,17 @@
                                         <td>@item.Role</td>
                                         <td>@item.City</td>
                                         <td>@item.DateJoined</td>
+                                        <td>
+                                            <a class="text-primary" asp-aciton="Edit" asp-route-id="@item.Id">
+                                                <i class="fas fa-edit"></i>Edit
+                                            </a><br />
+                                            <a class="text-primary" asp-aciton="Detail" asp-route-id="@item.Id">
+                                                <i class="fas fa-info-circle"></i>Detail
+                                            </a><br />
+                                            <a class="text-primary" asp-aciton="Delete" asp-route-id="@item.Id">
+                                                <i class="fas fa-user-times"></i>Delete
+                                            </a>
+                                        </td>
                                     </tr>
                                 }
                             </tbody>
