@@ -127,6 +127,7 @@ namespace PaymentManagement.Web.Controllers
         }
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(EditViewModel model)
         {
             if (ModelState.IsValid)
@@ -156,12 +157,13 @@ namespace PaymentManagement.Web.Controllers
 
                 if(model.ImageUrl != null && model.ImageUrl.Length > 0)
                 {
+
                     var imgPath = @"images/employee";
-                    var fileName = Path.GetFileName(model.ImageUrl.FileName);
                     var ext = Path.GetFileNameWithoutExtension(model.ImageUrl.FileName);
+                    var fileName = Path.GetExtension(model.ImageUrl.FileName);
                     var webRoot = _webHostEnvironment.WebRootPath;
 
-                    fileName = DateTime.UtcNow.ToString("yyyy/mm/dd") + fileName + ext;
+                    fileName = DateTime.UtcNow.ToString("yymmssfff") + fileName + ext;
                     var path = Path.Combine(webRoot, imgPath, fileName);
                     await model.ImageUrl.CopyToAsync(new FileStream(path, FileMode.Create));
                     employee.ImageUrl = "/" + imgPath + "/" + fileName;
@@ -175,7 +177,35 @@ namespace PaymentManagement.Web.Controllers
 
         public IActionResult Detail(int id)
         {
-            return View();
+            var employee = _employeeService.GetById(id);
+
+            if(employee == null)
+            {
+                return NotFound();
+            }
+
+            var model = new DetailViewModel()
+            {
+                Id = employee.Id,
+                EmpNumber = employee.EmpNumber,
+                FullName = employee.FullName,
+                Gender = employee.Gender,
+                ImageUrl = employee.ImageUrl,
+                BirthDate = employee.BirthDate,
+                CreateDate = employee.CreateDate,
+                Role = employee.Role,
+                EmailAddress = employee.EmailAddress,
+                SSN = employee.SSN,
+                Phone = employee.Phone,
+                PaymentMethod = employee.PaymentMethod,
+                StudentLoan = employee.StudentLoan,
+                UnionMember = employee.UnionMember,
+                Address = employee.Address,
+                City = employee.City,
+                PostalCode = employee.PostalCode
+            };
+
+            return View(model);
         }
     }
 }

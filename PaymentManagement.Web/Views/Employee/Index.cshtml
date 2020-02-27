@@ -39,15 +39,15 @@
                                         <td>@item.Gender</td>
                                         <td>@item.Role</td>
                                         <td>@item.City</td>
-                                        <td>@item.DateJoined</td>
+                                        <td>@item.DateJoined.ToString("dd/MM/yyyy")</td>
                                         <td>
-                                            <a class="text-primary" asp-aciton="Edit" asp-route-id="@item.Id">
+                                            <a class="text-primary" asp-action="Edit" asp-route-id="@item.Id">
                                                 <i class="fas fa-edit"></i>Edit
-                                            </a><br />
-                                            <a class="text-primary" asp-aciton="Detail" asp-route-id="@item.Id">
+                                            </a>
+                                            <a class="text-info" asp-action="Detail" asp-route-id="@item.Id">
                                                 <i class="fas fa-info-circle"></i>Detail
-                                            </a><br />
-                                            <a class="text-primary" asp-aciton="Delete" asp-route-id="@item.Id">
+                                            </a>
+                                            <a class="text-danger" asp-action="Delete" asp-route-id="@item.Id">
                                                 <i class="fas fa-user-times"></i>Delete
                                             </a>
                                         </td>
