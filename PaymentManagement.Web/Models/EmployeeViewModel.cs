@@ -79,8 +79,10 @@ namespace PaymentManagement.Web.Models
         [Display(Name = "Photo")]
         public IFormFile ImageUrl { get; set; }
         [DataType(DataType.Date)]
+        [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}")]
         public DateTime BirthDate { get; set; }
         [DataType(DataType.Date)]
+        [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}")]
         public DateTime DateJoined { get; set; }
         [Required(ErrorMessage = "Role is required."), StringLength(100)]
         public string Role { get; set; }
@@ -119,5 +121,11 @@ namespace PaymentManagement.Web.Models
         public string Address { get; set; }
         public string City { get; set; }
         public string PostalCode { get; set; }
+    }
+
+    public class DeleteViewModel
+    {
+        public int Id { get; set; }
+        public string FullName { get; set; }
     }
 }
