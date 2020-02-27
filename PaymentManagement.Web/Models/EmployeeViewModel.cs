@@ -64,7 +64,7 @@ namespace PaymentManagement.Web.Models
     public class EditViewModel
     {
         public int Id { get; set; }
-        [Required(ErrorMessage = "Employee number is required."), RegularExpression(@"/^([A-Za-z]{2,}-\d+;)+$/")]
+        [Required(ErrorMessage = "Employee number is required."), RegularExpression(@"^[A-Z]{3,3}[0-9]{3}$")]
         public string EmpNumber { get; set; }
         [Required(ErrorMessage = "First name is required."), StringLength(50, MinimumLength = 2), RegularExpression(@"^[A-Z][a-zA-Z""'\s-]*$"), Display(Name = "First Name")]
         public string FirstName { get; set; }
@@ -74,6 +74,8 @@ namespace PaymentManagement.Web.Models
         public string LastName { get; set; }
         public string FullName => FirstName + (string.IsNullOrEmpty(MiddleName) ? " " : MiddleName) + LastName;
         public string Gender { get; set; }
+        [Display(Name = "Phone Number")]
+        public string PhoneNumber { get; set; }
         [Display(Name = "Photo")]
         public IFormFile ImageUrl { get; set; }
         [DataType(DataType.Date)]
@@ -96,5 +98,26 @@ namespace PaymentManagement.Web.Models
         [Display(Name = "Union Member")]
         public UnionMember UnionMember { get; set; }
         public IEnumerable<PaymentRecord> PaymentRecords { get; set; }
+    }
+
+    public class DetailViewModel
+    {
+        public int Id { get; set; }
+        public string EmpNumber { get; set; }
+        public string FullName { get; set; }
+        public string Gender { get; set; }
+        public string ImageUrl { get; set; }
+        public DateTime BirthDate { get; set; }
+        public DateTime CreateDate { get; set; }
+        public string Role { get; set; }
+        public string EmailAddress { get; set; }
+        public string SSN { get; set; }
+        public string Phone { get; set; }
+        public PaymentMethod PaymentMethod { get; set; }
+        public StudentLoan StudentLoan { get; set; }
+        public UnionMember UnionMember { get; set; }
+        public string Address { get; set; }
+        public string City { get; set; }
+        public string PostalCode { get; set; }
     }
 }
