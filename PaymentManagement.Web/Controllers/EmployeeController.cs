@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 using PaymentManagement.Entity;
@@ -11,6 +12,7 @@ using PaymentManagement.Web.Models;
 
 namespace PaymentManagement.Web.Controllers
 {
+    //[Authorize]
     public class EmployeeController : Controller
     {
         private readonly IEmployeeService _employeeService;
@@ -64,6 +66,7 @@ namespace PaymentManagement.Web.Controllers
                     CreateDate = model.DateJoined,
                     Role = model.Role,
                     EmailAddress = model.Email,
+                    Phone = model.PhoneNumber,
                     SSN = model.SSN,
                     Address = model.Address,
                     City = model.City,
@@ -77,8 +80,8 @@ namespace PaymentManagement.Web.Controllers
                 if(model.ImageUrl.Length > 0 && model.ImageUrl != null)
                 {
                     var imgPath = @"images/employee";
-                    var ext = Path.GetFileNameWithoutExtension(model.ImageUrl.FileName);
-                    var fileName = Path.GetExtension(model.ImageUrl.FileName);             
+                    var fileName = Path.GetFileNameWithoutExtension(model.ImageUrl.FileName);
+                    var ext = Path.GetExtension(model.ImageUrl.FileName);             
                     var webRoot = _webHostEnvironment.WebRootPath;
 
                     fileName = DateTime.UtcNow.ToString("yymmssfff") + fileName + ext;
@@ -113,6 +116,7 @@ namespace PaymentManagement.Web.Controllers
                 DateJoined = employee.CreateDate,
                 Role = employee.Role,
                 Email = employee.EmailAddress,
+                PhoneNumber = employee.Phone,
                 SSN = employee.SSN,
                 Address = employee.Address,
                 City = employee.City,
@@ -145,6 +149,7 @@ namespace PaymentManagement.Web.Controllers
                     CreateDate = model.DateJoined,
                     Role = model.Role,
                     EmailAddress = model.Email,
+                    Phone = model.PhoneNumber,
                     SSN = model.SSN,
                     Address = model.Address,
                     City = model.City,
@@ -159,8 +164,8 @@ namespace PaymentManagement.Web.Controllers
                 {
 
                     var imgPath = @"images/employee";
-                    var ext = Path.GetFileNameWithoutExtension(model.ImageUrl.FileName);
-                    var fileName = Path.GetExtension(model.ImageUrl.FileName);
+                    var fileName = Path.GetFileNameWithoutExtension(model.ImageUrl.FileName);
+                    var ext = Path.GetExtension(model.ImageUrl.FileName);
                     var webRoot = _webHostEnvironment.WebRootPath;
 
                     fileName = DateTime.UtcNow.ToString("yymmssfff") + fileName + ext;
@@ -206,6 +211,30 @@ namespace PaymentManagement.Web.Controllers
             };
 
             return View(model);
+        }
+        [HttpGet]
+        public IActionResult Delete(int id)
+        {
+            var employee = _employeeService.GetById(id);
+            if(employee == null)
+            { 
+                return NotFound();
+            }
+
+            var model = new DeleteViewModel()
+            {
+                Id = employee.Id,
+                FullName = employee.FullName,
+            };
+
+            return View(model);
+        }
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Delete(DeleteViewModel model)
+        {
+            await _employeeService.DeleteEmployeeById(model.Id);
+            return RedirectToAction(nameof(Index));
         }
     }
 }
