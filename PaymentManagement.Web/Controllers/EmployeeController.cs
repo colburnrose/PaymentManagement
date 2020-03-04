@@ -22,10 +22,12 @@ namespace PaymentManagement.Web.Controllers
             _employeeService = employeeService;
             _webHostEnvironment = webHost;
         }
+
+        [Route("api/Employee/Index")]
         public IActionResult Index()
         {
             var employees = _employeeService.GetAllEmployees()
-                .Select(emp => new EmployeeViewModel 
+                .Select(emp => new EmployeeViewModel
                 {
                     Id = emp.Id,
                     EmpNumber = emp.EmpNumber,
@@ -40,6 +42,7 @@ namespace PaymentManagement.Web.Controllers
         }
 
         [HttpGet]
+        [Route("api/Employee/Create")]
         public IActionResult Create()
         {
             var model = new CreateViewModel();
@@ -48,6 +51,7 @@ namespace PaymentManagement.Web.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Route("api/Employee/Create")]
         public async Task<IActionResult> Create(CreateViewModel model)
         {
             if (ModelState.IsValid)
@@ -97,6 +101,7 @@ namespace PaymentManagement.Web.Controllers
         }
 
         [HttpGet]
+        [Route("api/Employee/Edit/{id}")]
         public IActionResult Edit(int id)
         {
             var employee = _employeeService.GetById(id);
@@ -130,8 +135,9 @@ namespace PaymentManagement.Web.Controllers
             return View(model);
         }
 
-        [HttpPost]
+        [HttpPut]
         [ValidateAntiForgeryToken]
+        [Route("api/Employee/Edit")]
         public async Task<IActionResult> Edit(EditViewModel model)
         {
             if (ModelState.IsValid)
@@ -179,7 +185,7 @@ namespace PaymentManagement.Web.Controllers
             }
             return View();
         }
-
+        [Route("api/Employee/Detail/{id}")]
         public IActionResult Detail(int id)
         {
             var employee = _employeeService.GetById(id);
@@ -212,7 +218,9 @@ namespace PaymentManagement.Web.Controllers
 
             return View(model);
         }
+
         [HttpGet]
+        [Route("api/Employee/Delete/{id}")]
         public IActionResult Delete(int id)
         {
             var employee = _employeeService.GetById(id);
@@ -231,10 +239,13 @@ namespace PaymentManagement.Web.Controllers
         }
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Route("api/Employee/Delete")]
         public async Task<IActionResult> Delete(DeleteViewModel model)
         {
             await _employeeService.DeleteEmployeeById(model.Id);
             return RedirectToAction(nameof(Index));
         }
+
+
     }
 }
