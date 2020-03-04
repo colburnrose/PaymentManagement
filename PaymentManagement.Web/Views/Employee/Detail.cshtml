@@ -3,5 +3,43 @@
     ViewData["Title"] = "Details";
 }
 
-<h1>Details</h1>
-
+<div class="col-md-12 grid-margin-md-0">
+    <div class="card">
+        <div class="card-body">
+            <nav aria-label="breadcrumb">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a asp-controller="Home" asp-action="Index">Home</a></li>
+                    <li class="breadcrumb-item"><a asp-controller="Employee" asp-action="Index">Employee List</a></li>
+                    <li class="breadcrumb-item active" aria-current="page"><a asp-controller="Home" asp-action="Index">Employee Details</a></li>
+                </ol>
+            </nav>
+            <div class="wrap d-flex justify-content-start justify-content-sm-center flex-wrap">
+                <img class="rounded-circle shadow-lg" style="width:200px; height: 200px;" src="@Url.Content(Model.ImageUrl)" alt="image"/>
+                <div class="wrap align-items-center ml-5">
+                    <p class="font-weight-bold text-succes" style="font-size:16px">@Model.FullName</p>
+                    <p class="font-weight-normal text-succes" style="font-size:16px">Role: @Model.Role</p>
+                    <p class="font-weight-normal text-succes" style="font-size:16px">Gender: @Model.Gender</p>
+                    <p class="font-weight-normal text-succes" style="font-size:16px">Date Of Birth: @Model.BirthDate.ToShortDateString()</p>
+                    <p class="font-weight-normal text-succes" style="font-size:16px">Employee Number: @Model.EmpNumber</p>
+                    <p class="font-weight-normal text-succes" style="font-size:16px">SSN: @Model.SSN</p>
+                    <p class="font-weight-normal">Email: <a href="#">@Model.EmailAddress</a></p>
+                    <p class="font-weight-normal">Phone: <a href="tel:@Model.Phone">@Model.Phone</a></p>
+                    <br /><br />
+                    <p class="font-weight-bold">Pay and Deductions</p>
+                    <hr style="background-color:crimson" />
+                    <p class="font-weight-normal">Payment Method: @Model.PaymentMethod</p>
+                    <p class="font-weight-normal">Student Loan: @Model.StudentLoan</p>
+                    <p class="font-weight-normal">Union Member: @Model.UnionMember</p>
+                    <p class="font-weight-normal"><i class="fas fa-envelope" style="margin-right:0.6em; color:cornflowerblue"></i> <a href="mailto:@Model.EmailAddress?subject=Payslip&body=Attached within is your paylip.">Send Payslip</a></p>
+                    <br /><br />
+                    <p class="font-weight-bold"> Address, City, and Zip</p>
+                    <hr style="background-color:crimson" />
+                    <p class="font-weight-normal"> @Model.Address</p>
+                    <p class="font-weight-normal"> @Model.City, @Model.PostalCode</p>
+                    <br />
+                    <br />
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
