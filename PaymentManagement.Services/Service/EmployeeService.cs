@@ -23,7 +23,7 @@ namespace PaymentManagement.Services.Service
         }
         public async Task CreateEmployeeAsync(Employee employee)
         {
-            _db.Employees.Add(employee);
+            await _db.Employees.AddAsync(employee);
             await _db.SaveChangesAsync();
         }
 
