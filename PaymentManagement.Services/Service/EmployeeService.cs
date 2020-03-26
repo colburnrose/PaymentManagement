@@ -1,4 +1,5 @@
 ﻿using PaymentManagement.Entity;
+using PaymentManagement.Entity.Enums;
 using PaymentManagement.Services.Interface;
 using PaymentManagement.Web.Data;
 using System;
@@ -12,6 +13,7 @@ namespace PaymentManagement.Services.Service
     public class EmployeeService : IEmployeeService
     {
         private readonly ApplicationDbContext _db;
+        private decimal repayment;
         public EmployeeService(ApplicationDbContext db)
         {
             _db = db;
@@ -54,12 +56,35 @@ namespace PaymentManagement.Services.Service
 
         public decimal StudentLoans(int id, decimal amount)
         {
-            throw new NotImplementedException();
+            var emp = GetById(id);
+            if(emp.StudentLoan == StudentLoan.Yes && amount > 1750 && amount < 2000)
+            {
+                repayment = 15m;
+            }
+            else if(emp.StudentLoan == StudentLoan.Yes && amount >= 2000 && amount < 2250)
+            {
+                repayment = 38m;
+            }
+            else if (emp.StudentLoan == StudentLoan.Yes && amount >= 2250 && amount < 2500)
+            {
+                repayment = 60m;
+            }
+            else if (emp.StudentLoan == StudentLoan.Yes && amount > 2500)
+            {
+                repayment = 83m;
+            }
+            else
+            {
+                repayment = 0m;
+            }
+            return repayment;
         }
 
         public decimal UnionFees(int id)
         {
-            throw new NotImplementedException();
+            var emp = GetById(id);
+            var fee = emp.UnionMember == UnionMember.Yes ? 10m : 0m;
+            return fee;
         }
     }
 }
