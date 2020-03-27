@@ -1,4 +1,5 @@
-﻿using PaymentManagement.Entity;
+﻿using Microsoft.AspNetCore.Mvc.Rendering;
+using PaymentManagement.Entity;
 using PaymentManagement.Entity.Enums;
 using PaymentManagement.Services.Interface;
 using PaymentManagement.Web.Data;
@@ -85,6 +86,15 @@ namespace PaymentManagement.Services.Service
             var emp = GetById(id);
             var fee = emp.UnionMember == UnionMember.Yes ? 10m : 0m;
             return fee;
+        }
+
+        public IEnumerable<SelectListItem> GetAllEmployeesForPayment()
+        {
+            return GetAllEmployees().Select(emp => new SelectListItem()
+            {
+                Text = emp.FullName,
+                Value = emp.Id.ToString()
+            }); ;
         }
     }
 }

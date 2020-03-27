@@ -1,4 +1,5 @@
-﻿using PaymentManagement.Entity;
+﻿using Microsoft.AspNetCore.Mvc.Rendering;
+using PaymentManagement.Entity;
 using PaymentManagement.Entity.Enums;
 using System;
 using System.Collections.Generic;
@@ -17,5 +18,6 @@ namespace PaymentManagement.Services.Interface
         IEnumerable<Employee> GetAllEmployees();
         decimal UnionFees(int id);
         decimal StudentLoans(int id, decimal amount);
+        IEnumerable<SelectListItem> GetAllEmployeesForPayment();
     }
 }
