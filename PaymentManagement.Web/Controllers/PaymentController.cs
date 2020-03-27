@@ -44,7 +44,7 @@ namespace PaymentManagement.Web.Controllers
                 PayDate = payment.DatePaid,
                 PayMonth = payment.PayMonth,
                 TaxYearId = payment.TaxYearId,
-                Year = payment.TaxYear.ToString(),
+                Year = _payrollService.GetTaxYearById(payment.TaxYearId).YearOfTax,
                 TotalEarnings = payment.TotalEarnings,
                 TotalDeductions = payment.TotalDeduction,
                 NetPayment = payment.NetPayment
