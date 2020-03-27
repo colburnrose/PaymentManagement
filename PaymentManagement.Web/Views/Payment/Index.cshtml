@@ -21,7 +21,6 @@
                                 <thead>
                                     <tr>
                                         <th>Employee</th>
-                                        <th>Name</th>
                                         <th>Pay Date</th>
                                         <th>Month</th>
                                         <th>Tax Year</th>
@@ -47,14 +46,11 @@
                                             <td>@item.TotalDeductions.ToString("C")</td>
                                             <td>@item.NetPayment.ToString("C")</td>
                                             <td>
-                                                <a class="text-primary" asp-action="Edit" asp-route-id="@item.Id">
-                                                    <i class="fas fa-edit"></i>Edit
+                                                <a class="text-primary" asp-action="Payslip" asp-route-id="@item.Id">
+                                                    <i class="fas fa-bars"></i>Payslip
                                                 </a>
-                                                <a class="text-info" asp-action="Detail" asp-route-id="@item.Id">
-                                                    <i class="fas fa-info-circle"></i>Detail
-                                                </a>
-                                                <a class="text-danger" asp-action="Delete" asp-route-id="@item.Id">
-                                                    <i class="fas fa-user-times"></i>Delete
+                                                <a class="text-danger" asp-action="PrintPayslip" asp-route-id="@item.Id">
+                                                    <i class="fas fa-file-pdf"></i>Payslip Pdf
                                                 </a>
                                             </td>
                                         </tr>

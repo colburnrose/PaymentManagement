@@ -56,6 +56,11 @@ namespace PaymentManagement.Services.Service
             return _db.PaymentRecords.OrderBy(s => s.EmpId);
         }
 
+        public TaxYear GetTaxYearById(int id)
+        {
+            return _db.TaxYears.Where(year => year.Id == id).FirstOrDefault();
+        }
+
         public IEnumerable<SelectListItem> GetTaxYearItems()
         {
             var allTaxes = _db.TaxYears.Select(taxes => new SelectListItem

@@ -11,6 +11,7 @@ namespace PaymentManagement.Services.Interface
     {
         Task CreatePaymentAsync(PaymentRecord paymentRecord);
         PaymentRecord GetPaymentById(int id);
+        TaxYear GetTaxYearById(int id);
         IEnumerable<PaymentRecord> GetPaymentRecords();
         IEnumerable<SelectListItem> GetTaxYearItems();
         decimal OverTimeHoursWorked(decimal overtimeHours, decimal contractHours); // Overtime hours - Contract hours
