@@ -34,6 +34,7 @@ namespace PaymentManagement.Web
             services.AddControllersWithViews();
             services.AddRazorPages();
             services.AddScoped<IEmployeeService, EmployeeService>();
+            services.AddScoped<IPayrollService, PayrollService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
