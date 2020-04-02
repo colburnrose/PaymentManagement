@@ -239,7 +239,7 @@ namespace PaymentManagement.Web.Controllers
         }
         [HttpPost]
         [ValidateAntiForgeryToken]
-        [Route("api/Employee/Delete")]
+        [Route("api/Employee/Delete/{id}")]
         public async Task<IActionResult> Delete(DeleteViewModel model)
         {
             await _employeeService.DeleteEmployeeById(model.Id);

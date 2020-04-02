@@ -94,7 +94,7 @@ namespace PaymentManagement.Services.Service
             {
                 Text = emp.FullName,
                 Value = emp.Id.ToString()
-            }); ;
+            }); 
         }
     }
 }

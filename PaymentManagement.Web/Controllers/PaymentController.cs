@@ -103,5 +103,45 @@ namespace PaymentManagement.Web.Controllers
             ViewBag.taxYears = _payrollService.GetTaxYearItems();
             return View();
         }
+
+        [Route("api/Payment/Detail")]
+        public IActionResult Detail(int id)
+        {
+            var payment = _payrollService.GetPaymentById(id);
+
+            if(payment == null)
+            {
+                return NotFound();
+            }
+
+            var model = new PaymentDetailView
+            {
+                Id = payment.Id,
+                EmpId = payment.EmpId,
+                FullName = payment.FullName,
+                NINO = payment.NINO,
+                DatePaid = payment.DatePaid,
+                PayMonth = payment.PayMonth,
+                TaxYearId = payment.TaxYearId,
+                Year = _payrollService.GetTaxYearById(payment.TaxYearId).YearOfTax,
+                TaxCode = payment.TaxCode,
+                HourlyRate = payment.HourlyRate,
+                HoursWorked = payment.HoursWorked,
+                ContractHours = payment.ContractHours,
+                OvertimeHours = payment.OvertimeHours,
+                OvertimeRate = _payrollService.OvertimeRate(payment.HourlyRate),
+                ContractEarnings = payment.ContractEarnings,
+                OvertimeEarnings = payment.OvertimeEarnings,
+                Tax = payment.Tax,
+                TaxYear = payment.TaxYear,
+                SSN = payment.SSN,
+                UnionFee = payment.UnionFee,
+                StudentLoan = payment.StudentLoan,
+                TotalEarnings = payment.TotalEarnings,
+                TotalDeduction = payment.TotalDeduction,
+                NetPayment = payment.NetPayment
+            };
+            return View(model);
+        }
     }
 }

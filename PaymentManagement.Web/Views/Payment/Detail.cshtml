@@ -1,0 +1,176 @@
+﻿@model PaymentDetailView
+
+@{
+    ViewData["Title"] = "Detail";
+}
+
+    <div class="col-md-12 grid-margin stretch-card">
+        <div class="card">
+            <div class="card-body">
+                <nav aria-label="breadcrumb">
+                    <ol class="breadcrumb">
+                        <li class="breadcrumb-item"><a asp-controller="Home" asp-action="Index">Home</a></li>
+                        <li class="breadcrumb-item"><a asp-controller="Payment" asp-action="Index">Payment Records</a></li>
+                        <li class="breadcrumb-item active" aria-current="page">Payment Details</li>
+                    </ol>
+                </nav><br /><br />
+                <form method="get" enctype="multipart/form-data" asp-action="Detail">
+                    <div class="form-row">
+                        <div class="form-group col-md-2 font-weight-bold">
+                            <label asp-for="FullName"></label>
+                        </div>
+                        <div class="form-group col-md-4 font-italic font-weight-bolder">
+                            <input asp-for="FullName" class="form-control" style="background-color: #293043"/>
+                        </div>
+                        <div class="form-group col-md-2"></div>
+                        <div class="form-group col-md-1">
+                            <label asp-for="SSN"></label>
+                        </div>
+                        <div class="form-group col-md-3">
+                            <input asp-for="NINO" class="form-control" readonly style="background-color: #293043"/>
+                        </div>
+                    </div><br />
+                    <h3>Date and Hours</h3>
+                    <hr style="background-color:crimson"/>
+                    <div class="form-row">
+                        <div class="form-group col-md-1">
+                            <label asp-for="PayMonth"></label>
+                        </div>
+                        <div class="form-group col-md-3">
+                            <input asp-for="PayMonth" class="form-control" readonly style="background-color: #293043" />
+                        </div>
+                        <div class="form-group col-md-1">
+                            <label asp-for="Year"></label>
+                        </div>
+                        <div class="form-group col-md-3">
+                            <input asp-for="Year" class="form-control" readonly style="background-color: #293043" />
+                        </div>
+                        <div class="form-group col-md-1">
+                            <label asp-for="DatePaid"></label>
+                        </div>
+                        <div class="form-group col-md-3">
+                            <input asp-for="DatePaid" class="form-control" readonly style="background-color: #293043" />
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group col-md-1">
+                            <label asp-for="HourlyRate"></label>
+                        </div>
+                        <div class="form-group col-md-3">
+                            <input asp-for="HourlyRate" class="form-control" readonly style="background-color: #293043" />
+                        </div>
+                        <div class="form-group col-md-1">
+                            <label asp-for="HoursWorked"></label>
+                        </div>
+                        <div class="form-group col-md-3">
+                            <input asp-for="HoursWorked" class="form-control" readonly style="background-color: #293043" />
+                        </div>
+                        <div class="form-group col-md-1">
+                            <label asp-for="ContractHours"></label>
+                        </div>
+                        <div class="form-group col-md-3">
+                            <input asp-for="ContractHours" class="form-control" readonly style="background-color: #293043" />
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="col-md-4">
+
+                        </div>
+                        <div class="form-group col-md-1">
+                            <label asp-for="OvertimeRate"></label>
+                        </div>
+                        <div class="form-group col-md-3">
+                            <input asp-for="OvertimeRate" class="form-control" readonly style="background-color: #293043" />
+                        </div>
+                        <div class="form-group col-md-1">
+                            <label asp-for="OvertimeHours"></label>
+                        </div>
+                        <div class="form-group col-md-3">
+                            <input asp-for="OvertimeHours" class="form-control" readonly style="background-color: #293043" />
+                        </div>
+                    </div><br />
+                    <h3>Deductions</h3>
+                    <hr style="background-color:crimson"/>
+                    <div class="form-row">
+                        <div class="form-group col-md-1">
+                            <label asp-for="TaxCode"></label>
+                        </div>
+                        <div class="form-group col-md-3">
+                            <input asp-for="TaxCode" class="form-control" readonly style="background-color: #293043" />
+                        </div>
+                        <div class="form-group col-md-1">
+                            <label asp-for="Tax"></label>
+                        </div>
+                        <div class="form-group col-md-3">
+                            <input asp-for="Tax" class="form-control" readonly style="background-color: #293043" />
+                        </div>
+                        <div class="form-group col-md-1">
+                            <label asp-for="NINO"></label>
+                        </div>
+                        <div class="form-group col-md-3">
+                            <input asp-for="SSN" class="form-control" readonly style="background-color: #293043" />
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group col-md-4">
+
+                        </div>
+                        <div class="form-group col-md-1">
+                            <label asp-for="StudentLoan"></label>
+                        </div>
+                        <div class="form-group col-md-3">
+                            <input asp-for="StudentLoan" class="form-control" readonly style="background-color: #293043" />
+                        </div>
+                        <div class="form-group col-md-1">
+                            <label asp-for="UnionFee"></label>
+                        </div>
+                        <div class="form-group col-md-3">
+                            <input asp-for="UnionFee" class="form-control" readonly style="background-color: #293043" />
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group col-md-8"></div>
+                        <div class="form-group col-md-1">
+                            <label asp-for="TotalDeduction"></label>
+                        </div>
+                        <div class="form-group col-md-3">
+                            <input asp-for="TotalDeduction" class="form-control" readonly style="background-color: #293043"/>
+                        </div>
+                    </div><br />
+                    <h3>Earnings</h3>
+                    <hr style="background-color:crimson"/>
+                    <div class="form-row">
+                        <div class="form-group col-md-1">
+                            <label asp-for="ContractEarnings"></label>
+                        </div>
+                        <div class="form-group col-md-3">
+                            <input asp-for="ContractEarnings" class="form-control" readonly style="background-color: #293043"/>
+                        </div>
+                        <div class="form-group col-md-1">
+                            <label asp-for="OvertimeEarnings"></label>
+                        </div>
+                        <div class="form-group col-md-3">
+                            <input asp-for="OvertimeEarnings" class="form-control" readonly style="background-color: #293043"/>
+                        </div>
+                        <div class="form-group col-md-1">
+                            <label asp-for="TotalEarnings"></label>
+                        </div>
+                        <div class="form-group col-md-3">
+                            <input asp-for="TotalEarnings" class="form-control" readonly style="background-color: #293043"/>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group col-md-8">
+                        </div>
+                        <div class="form-group col-md-1">
+                            <label asp-for="NetPayment"></label>
+                        </div>
+                        <div class="form-group col-md-3">
+                            <input asp-for="NetPayment" class="form-control"readonly style="background-color: #293043"/>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
