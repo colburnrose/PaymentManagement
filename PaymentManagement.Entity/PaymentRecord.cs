@@ -26,7 +26,7 @@ namespace PaymentManagement.Entity
         [Column(TypeName = "decimal(18,2)")]
         public decimal HoursWorked { get; set; }
         [Column(TypeName = "decimal(18,2)")]
-        public decimal ContractHours { get; set; }
+        public decimal ContractHours { get; set; } = 40m;
         [Column(TypeName = "decimal(18,2)")]
         public decimal OvertimeHours { get; set; }
         [Column(TypeName = "money")]
