@@ -3,13 +3,13 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.29709.97
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PaymentManagement.Web", "PaymentManagement.Web\PaymentManagement.Web.csproj", "{AEDB8B12-DC69-4495-B0DB-CE8AD744D3E8}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PaymentManagement.Web", "PaymentManagement.Web\PaymentManagement.Web.csproj", "{AEDB8B12-DC69-4495-B0DB-CE8AD744D3E8}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PaymentManagement.Services", "PaymentManagement.Services\PaymentManagement.Services.csproj", "{F34E5D15-A9B5-46F5-8DCE-F1846B2ECCC2}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PaymentManagement.Services", "PaymentManagement.Services\PaymentManagement.Services.csproj", "{F34E5D15-A9B5-46F5-8DCE-F1846B2ECCC2}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PaymentManagement.DataLayer", "PaymentManagement.DataLayer\PaymentManagement.DataLayer.csproj", "{440D7BC5-2B9B-451C-A1DA-883809890917}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PaymentManagement.DataLayer", "PaymentManagement.DataLayer\PaymentManagement.DataLayer.csproj", "{440D7BC5-2B9B-451C-A1DA-883809890917}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PaymentManagement.Entity", "PaymentManagement.Entity\PaymentManagement.Entity.csproj", "{8AFF2F4D-77BC-4F25-B890-96080E16C1AD}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PaymentManagement.Entity", "PaymentManagement.Entity\PaymentManagement.Entity.csproj", "{8AFF2F4D-77BC-4F25-B890-96080E16C1AD}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
