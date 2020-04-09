@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 using PaymentManagement.Entity;
 using PaymentManagement.Services.Interface;
 using PaymentManagement.Web.Models;
+using RotativaCore;
 
 namespace PaymentManagement.Web.Controllers
 {
@@ -182,6 +183,16 @@ namespace PaymentManagement.Web.Controllers
                 NetPayment = payment.NetPayment
             };
             return View(model);
+        }
+
+        public IActionResult CreatePaySlipPdf(int id)
+        {
+            var payslip = new ActionAsPdf("PaySlip", new { id = id })
+            {
+                FileName = "payslip.pdf"
+            };
+
+            return payslip;
         }
     }
 }

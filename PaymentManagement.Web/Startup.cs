@@ -14,6 +14,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using PaymentManagement.Services.Interface;
 using PaymentManagement.Services.Service;
+using Microsoft.AspNetCore.Server.Kestrel.Core;
 
 namespace PaymentManagement.Web
 {
@@ -37,6 +38,13 @@ namespace PaymentManagement.Web
             services.AddScoped<IPayrollService, PayrollService>();
             services.AddScoped<ITax, TaxService>();
             services.AddScoped<ISocial, SocialService>();
+
+
+             //If using IIS. other option is KestrelServerOptions
+            services.Configure<IISServerOptions>(options =>
+            {
+                options.AllowSynchronousIO = true;
+            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
