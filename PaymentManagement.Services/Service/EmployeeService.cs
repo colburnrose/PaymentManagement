@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.EntityFrameworkCore;
 using PaymentManagement.Entity;
 using PaymentManagement.Entity.Enums;
 using PaymentManagement.Services.Interface;
@@ -50,10 +51,7 @@ namespace PaymentManagement.Services.Service
             await _db.SaveChangesAsync();
         }
 
-        public IEnumerable<Employee> GetAllEmployees()
-        {
-            return _db.Employees.ToList();
-        }
+        public IEnumerable<Employee> GetAllEmployees() => _db.Employees.AsNoTracking().OrderBy(emp => emp.FullName);
 
         public decimal StudentLoans(int id, decimal amount)
         {
