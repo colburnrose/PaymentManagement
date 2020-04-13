@@ -1,4 +1,4 @@
-﻿@model IEnumerable<EmployeeViewModel>
+﻿@model EmployeeListPagination<EmployeeViewModel>
 @{
     ViewData["Title"] = "Index";
 }
@@ -54,7 +54,17 @@
                                     </tr>
                                 }
                             </tbody>
-                        </table>
+                        </table><br />
+                        @{ 
+                            var prevButton = !Model.IsPreviousPage ? "disabled" : "";
+                            var nextButton = !Model.IsNextPage ? "disabled" : "";
+                        }
+                        <a asp-action="Index" asp-route-pageNumber="@(Model.PageIndex -1)" class="btn btn-primary @prevButton">
+                            Previous
+                        </a>
+                        <a asp-action="Index" asp-route-pageNumber="@(Model.PageIndex +1)" class="btn btn-primary @nextButton">
+                            Next
+                        </a>                    
                     </div>
                 </div>
             </div>

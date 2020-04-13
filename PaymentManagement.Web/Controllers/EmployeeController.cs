@@ -24,7 +24,7 @@ namespace PaymentManagement.Web.Controllers
         }
 
         [Route("api/Employee/Index")]
-        public IActionResult Index()
+        public IActionResult Index(int? pageNumber)
         {
             var employees = _employeeService.GetAllEmployees()
                 .Select(emp => new EmployeeViewModel
@@ -38,7 +38,9 @@ namespace PaymentManagement.Web.Controllers
                     Role = emp.Role,
                     City = emp.City
                 }).ToList();
-            return View(employees);
+            int pageSize = 3;
+
+            return View(EmployeeListPagination<EmployeeViewModel>.Create(employees, pageNumber ?? 1, pageSize));
         }
 
         [HttpGet]
