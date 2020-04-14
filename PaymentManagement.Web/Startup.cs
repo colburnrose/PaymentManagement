@@ -15,6 +15,7 @@ using Microsoft.Extensions.Hosting;
 using PaymentManagement.Services.Interface;
 using PaymentManagement.Services.Service;
 using Microsoft.AspNetCore.Server.Kestrel.Core;
+using PaymentManagement.DataLayer;
 
 namespace PaymentManagement.Web
 {
@@ -31,7 +32,21 @@ namespace PaymentManagement.Web
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddDbContext<ApplicationDbContext>(options => options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
-            services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true) .AddEntityFrameworkStores<ApplicationDbContext>();
+            services.AddIdentity<IdentityUser, IdentityRole>(options => options.SignIn.RequireConfirmedAccount = false) .AddEntityFrameworkStores<ApplicationDbContext>().AddDefaultTokenProviders();
+            services.Configure<IdentityOptions>(options => 
+            {
+                // Default Password Settings
+                options.Password.RequireDigit = true;
+                options.Password.RequireLowercase = true;
+                options.Password.RequireNonAlphanumeric = false;
+                options.Password.RequireUppercase = true;
+                options.Password.RequiredLength = 6;
+                options.Password.RequiredUniqueChars = 2;
+                // Default Lockout Option
+                options.Lockout.DefaultLockoutTimeSpan = TimeSpan.FromMinutes(10);
+                options.Lockout.MaxFailedAccessAttempts = 3;
+                options.Lockout.AllowedForNewUsers = true;
+            });
             services.AddControllersWithViews();
             services.AddRazorPages();
             services.AddScoped<IEmployeeService, EmployeeService>();
@@ -48,7 +63,7 @@ namespace PaymentManagement.Web
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env, UserManager<IdentityUser> userManager, RoleManager<IdentityRole> roleManager)
         {
             if (env.IsDevelopment())
             {
@@ -68,6 +83,8 @@ namespace PaymentManagement.Web
 
             app.UseAuthentication();
             app.UseAuthorization();
+
+            DataSeedUsers.UserandRoleSeedAsync(userManager, roleManager).Wait();
 
             app.UseEndpoints(endpoints =>
             {
