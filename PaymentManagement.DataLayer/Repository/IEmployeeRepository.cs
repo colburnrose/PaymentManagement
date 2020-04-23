@@ -1,14 +1,13 @@
 ﻿using Microsoft.AspNetCore.Mvc.Rendering;
 using PaymentManagement.Entity;
-using PaymentManagement.Entity.Enums;
 using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace PaymentManagement.Services.Interface
+namespace PaymentManagement.DataLayer.Repository
 {
-    public interface IEmployeeService
+    public interface IEmployeeRepository : IRepository<Employee>
     {
         Employee GetById(int id);
         Task UpdateEmployeeById(int id);
@@ -18,6 +17,6 @@ namespace PaymentManagement.Services.Interface
         IEnumerable<Employee> GetAllEmployees();
         decimal UnionFees(int id);
         decimal StudentLoans(int id, decimal amount);
-        IEnumerable<SelectListItem> GetAllEmployeesForPayment();
+        Task<IEnumerable<SelectListItem>> GetAllEmployeesForPayment();
     }
 }

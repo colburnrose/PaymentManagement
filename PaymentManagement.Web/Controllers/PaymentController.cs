@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
+using PaymentManagement.DataLayer.Repository;
+using PaymentManagement.DataLayer.UnitOfWork;
 using PaymentManagement.Entity;
 using PaymentManagement.Services.Interface;
 using PaymentManagement.Web.Models;
@@ -13,7 +15,7 @@ namespace PaymentManagement.Web.Controllers
     public class PaymentController : Controller
     {
         private readonly IPayrollService _payrollService;
-        private readonly IEmployeeService _employeeService;
+        private readonly IUnitOfWork _unitOfWork;
         private readonly ITax _taxService;
         private readonly ISocial _socialService;
         private decimal overtimeHrs;
@@ -26,10 +28,10 @@ namespace PaymentManagement.Web.Controllers
         private decimal tax;
         private decimal totalDeductions;
 
-        public PaymentController(IPayrollService payrollService, IEmployeeService employeeService, ITax taxService, ISocial socialService)
+        public PaymentController(IPayrollService payrollService, IUnitOfWork unitOfWork, ITax taxService, ISocial socialService)
         {
             _payrollService = payrollService;
-            _employeeService = employeeService;
+            _unitOfWork = unitOfWork;
             _taxService = taxService;
             _socialService = socialService;
         }
@@ -58,7 +60,7 @@ namespace PaymentManagement.Web.Controllers
         [Route("api/Payment/Create")]
         public IActionResult Create()
         {
-            ViewBag.employees = _employeeService.GetAllEmployeesForPayment();
+            ViewBag.employees = _unitOfWork.EmployeeRepository.GetAllEmployeesForPayment();
             ViewBag.taxYears = _payrollService.GetTaxYearItems();
             var model = new PaymentCreateModel();
             return View(model);
@@ -76,8 +78,8 @@ namespace PaymentManagement.Web.Controllers
                     Id = model.Id,
                     EmpId = model.EmpId,
                     Employee = model.Employee,
-                    FullName = _employeeService.GetById(model.EmpId).FullName,
-                    NINO = _employeeService.GetById(model.EmpId).SSN,
+                    FullName = _unitOfWork.EmployeeRepository.GetById(model.EmpId).FullName,
+                    NINO = _unitOfWork.EmployeeRepository.GetById(model.EmpId).SSN,
                     DatePaid = model.DatePaid,
                     PayMonth = model.PayMonth,
                     TaxYearId = model.TaxYearId,
@@ -91,8 +93,8 @@ namespace PaymentManagement.Web.Controllers
                     TotalEarnings = totalEarnings = _payrollService.TotalEarnings(overtimeEarnings, contractEarnings),
                     Tax = tax = _taxService.TaxAmount(totalEarnings),
                     SSN = ssn = _socialService.GetSocialDeductions(totalEarnings),
-                    UnionFee = unionFees = _employeeService.UnionFees(model.EmpId),
-                    StudentLoan = studentLoans = _employeeService.StudentLoans(model.EmpId, totalEarnings),
+                    UnionFee = unionFees = _unitOfWork.EmployeeRepository.UnionFees(model.EmpId),
+                    StudentLoan = studentLoans = _unitOfWork.EmployeeRepository.StudentLoans(model.EmpId, totalEarnings),
                     TotalDeduction = totalDeductions = _payrollService.TotalDeductions(tax, ssn, studentLoans,unionFees),
                     NetPayment = _payrollService.GetNetPay(totalEarnings, totalDeductions),
                 };
@@ -100,7 +102,7 @@ namespace PaymentManagement.Web.Controllers
                 await _payrollService.CreatePaymentAsync(payment);
                 return RedirectToAction(nameof(Index));
             }
-            ViewBag.employees = _employeeService.GetAllEmployeesForPayment();
+            ViewBag.employees = _unitOfWork.EmployeeRepository.GetAllEmployeesForPayment();
             ViewBag.taxYears = _payrollService.GetTaxYearItems();
             return View();
         }
