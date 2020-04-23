@@ -16,6 +16,9 @@ using PaymentManagement.Services.Interface;
 using PaymentManagement.Services.Service;
 using Microsoft.AspNetCore.Server.Kestrel.Core;
 using PaymentManagement.DataLayer;
+using PaymentManagement.DataLayer.Repository;
+using PaymentManagement.Entity;
+using PaymentManagement.DataLayer.UnitOfWork;
 
 namespace PaymentManagement.Web
 {
@@ -49,7 +52,7 @@ namespace PaymentManagement.Web
             });
             services.AddControllersWithViews();
             services.AddRazorPages();
-            services.AddScoped<IEmployeeService, EmployeeService>();
+            services.AddScoped<IUnitOfWork, UnitOfWork>();
             services.AddScoped<IPayrollService, PayrollService>();
             services.AddScoped<ITax, TaxService>();
             services.AddScoped<ISocial, SocialService>();

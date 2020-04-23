@@ -6,6 +6,8 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
+using PaymentManagement.DataLayer.Repository;
+using PaymentManagement.DataLayer.UnitOfWork;
 using PaymentManagement.Entity;
 using PaymentManagement.Services.Interface;
 using PaymentManagement.Web.Models;
@@ -15,18 +17,18 @@ namespace PaymentManagement.Web.Controllers
     //[Authorize]
     public class EmployeeController : Controller
     {
-        private readonly IEmployeeService _employeeService;
+        private readonly IUnitOfWork _unitOfWork;
         private readonly IWebHostEnvironment _webHostEnvironment;
-        public EmployeeController(IEmployeeService employeeService, IWebHostEnvironment webHost)
+        public EmployeeController(IUnitOfWork unitOfWork, IWebHostEnvironment webHost)
         {
-            _employeeService = employeeService;
+            _unitOfWork = unitOfWork;
             _webHostEnvironment = webHost;
         }
 
         [Route("api/Employee/Index")]
         public IActionResult Index(int? pageNumber)
         {
-            var employees = _employeeService.GetAllEmployees()
+            var employees = _unitOfWork.EmployeeRepository.GetAllEmployees()
                 .Select(emp => new EmployeeViewModel
                 {
                     Id = emp.Id,
@@ -95,7 +97,7 @@ namespace PaymentManagement.Web.Controllers
                     await model.ImageUrl.CopyToAsync(new FileStream(path, FileMode.Create));
                     employee.ImageUrl = "/" + imgPath + "/" + fileName;
                 }              
-                await _employeeService.CreateEmployeeAsync(employee);
+                await _unitOfWork.EmployeeRepository.CreateEmployeeAsync(employee);
                 return RedirectToAction(nameof(Index));
             }
 
@@ -106,7 +108,7 @@ namespace PaymentManagement.Web.Controllers
         [Route("api/Employee/Edit/{id}")]
         public IActionResult Edit(int id)
         {
-            var employee = _employeeService.GetById(id);
+            var employee = _unitOfWork.EmployeeRepository.GetById(id);
             if(employee == null)
             {
                 return NotFound();
@@ -137,9 +139,9 @@ namespace PaymentManagement.Web.Controllers
             return View(model);
         }
 
-        [HttpPut]
+        [HttpPost]
         [ValidateAntiForgeryToken]
-        [Route("api/Employee/Edit")]
+        [Route("api/Employee/Edit/{id}")]
         public async Task<IActionResult> Edit(EditViewModel model)
         {
             if (ModelState.IsValid)
@@ -152,7 +154,6 @@ namespace PaymentManagement.Web.Controllers
                     MiddleName = model.MiddleName,
                     LastName = model.LastName,
                     Gender = model.Gender,
-                    ImageUrl = model.ImageUrl.ToString(),
                     BirthDate = model.BirthDate,
                     CreateDate = model.DateJoined,
                     Role = model.Role,
@@ -182,7 +183,7 @@ namespace PaymentManagement.Web.Controllers
                     employee.ImageUrl = "/" + imgPath + "/" + fileName;
                 }
 
-                await _employeeService.UpdateEmployeeAsync(employee);
+                await _unitOfWork.EmployeeRepository.UpdateEmployeeAsync(employee);
                 return RedirectToAction(nameof(Index));
             }
             return View();
@@ -190,7 +191,7 @@ namespace PaymentManagement.Web.Controllers
         [Route("api/Employee/Detail/{id}")]
         public IActionResult Detail(int id)
         {
-            var employee = _employeeService.GetById(id);
+            var employee = _unitOfWork.EmployeeRepository.GetById(id);
 
             if(employee == null)
             {
@@ -225,7 +226,7 @@ namespace PaymentManagement.Web.Controllers
         [Route("api/Employee/Delete/{id}")]
         public IActionResult Delete(int id)
         {
-            var employee = _employeeService.GetById(id);
+            var employee = _unitOfWork.EmployeeRepository.GetById(id);
             if(employee == null)
             { 
                 return NotFound();
@@ -244,7 +245,7 @@ namespace PaymentManagement.Web.Controllers
         [Route("api/Employee/Delete/{id}")]
         public async Task<IActionResult> Delete(DeleteViewModel model)
         {
-            await _employeeService.DeleteEmployeeById(model.Id);
+            await _unitOfWork.EmployeeRepository.DeleteEmployeeById(model.Id);
             return RedirectToAction(nameof(Index));
         }
 
