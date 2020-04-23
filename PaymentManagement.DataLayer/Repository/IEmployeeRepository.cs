@@ -17,6 +17,6 @@ namespace PaymentManagement.DataLayer.Repository
         IEnumerable<Employee> GetAllEmployees();
         decimal UnionFees(int id);
         decimal StudentLoans(int id, decimal amount);
-        Task<IEnumerable<SelectListItem>> GetAllEmployeesForPayment();
+        IEnumerable<SelectListItem> GetAllEmployeesForPayment();
     }
 }
